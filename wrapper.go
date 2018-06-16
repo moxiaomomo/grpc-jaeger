@@ -3,6 +3,7 @@ package wrapper
 import (
 	"context"
 	"io"
+	"strings"
 	"time"
 
 	opentracing "github.com/opentracing/opentracing-go"
@@ -14,6 +15,29 @@ import (
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 )
+
+//MDReaderWriter metadata Reader and Writer
+type MDReaderWriter struct {
+	metadata.MD
+}
+
+//ForeachKey range all keys to call handler
+func (c MDReaderWriter) ForeachKey(handler func(key, val string) error) error {
+	for k, vs := range c.MD {
+		for _, v := range vs {
+			if err := handler(k, v); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// Set implements Set() of opentracing.TextMapWriter
+func (c MDReaderWriter) Set(key, val string) {
+	key = strings.ToLower(key)
+	c.MD[key] = append(c.MD[key], val)
+}
 
 // NewJaegerTracer NewJaegerTracer for current service
 func NewJaegerTracer(serviceName string, jagentHost string) (tracer opentracing.Tracer, closer io.Closer, err error) {
@@ -117,7 +141,7 @@ func ServerInterceptor(tracer opentracing.Tracer) grpc.UnaryServerInterceptor {
 			)
 			defer span.Finish()
 
-			ctx := opentracing.ContextWithSpan(ctx, span)
+			ctx = opentracing.ContextWithSpan(ctx, span)
 		}
 
 		return handler(ctx, req)
