@@ -63,7 +63,16 @@ func Test_Tracing(t *testing.T) {
 		} else {
 			fmt.Printf("call sayhello suc, res:%+v\n", resp)
 		}
-		os.Exit(0)
+	}()
+
+	go func() {
+		timeout := time.After(time.Second * 3)
+		for {
+			select {
+			case <-timeout:
+				os.Exit(0)
+			}
+		}
 	}()
 
 	svr.Serve(ln)
