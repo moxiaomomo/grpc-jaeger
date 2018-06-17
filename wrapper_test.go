@@ -66,15 +66,7 @@ func Test_Tracing(t *testing.T) {
 		}
 	}()
 
-	go func() {
-		timeout := time.After(time.Second * 3)
-		for {
-			select {
-			case <-timeout:
-				os.Exit(0)
-			}
-		}
-	}()
+	go svr.Serve(ln)
 
-	svr.Serve(ln)
+	time.Sleep(time.Second * 3)
 }

@@ -35,8 +35,8 @@ func (c MDReaderWriter) ForeachKey(handler func(key, val string) error) error {
 
 // Set implements Set() of opentracing.TextMapWriter
 func (c MDReaderWriter) Set(key, val string) {
-	_key = strings.ToLower(key)
-	c.MD[_key] = append(c.MD[_key], val)
+	key = strings.ToLower(key)
+	c.MD[key] = append(c.MD[key], val)
 }
 
 // NewJaegerTracer NewJaegerTracer for current service
