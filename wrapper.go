@@ -21,7 +21,7 @@ type MDReaderWriter struct {
 	metadata.MD
 }
 
-//ForeachKey range all keys to call handler
+// ForeachKey implements ForeachKey of opentracing.TextMapReader
 func (c MDReaderWriter) ForeachKey(handler func(key, val string) error) error {
 	for k, vs := range c.MD {
 		for _, v := range vs {
@@ -35,8 +35,8 @@ func (c MDReaderWriter) ForeachKey(handler func(key, val string) error) error {
 
 // Set implements Set() of opentracing.TextMapWriter
 func (c MDReaderWriter) Set(key, val string) {
-	key = strings.ToLower(key)
-	c.MD[key] = append(c.MD[key], val)
+	_key = strings.ToLower(key)
+	c.MD[_key] = append(c.MD[_key], val)
 }
 
 // NewJaegerTracer NewJaegerTracer for current service

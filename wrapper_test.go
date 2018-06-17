@@ -6,10 +6,11 @@ import (
 	"os"
 	"time"
 
+	"testing"
+
 	pb "github.com/moxiaomomo/grpc-jaeger/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"testing"
 )
 
 func Test_Tracing(t *testing.T) {
