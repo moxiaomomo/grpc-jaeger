@@ -1,5 +1,8 @@
 # grpc-jaeger
 
+[![Build Status](https://travis-ci.org/moxiaomomo/grpc-jaeger.svg?branch=master)](https://travis-ci.org/moxiaomomo/grpc-jaeger)
+[![Go Report Card](https://goreportcard.com/badge/github.com/moxiaomomo/grpc-jaeger)](https://goreportcard.com/badge/github.com/moxiaomomo/grpc-jaeger)
+
 grpc-jaeger是基于Go的针对gRPC的一种拦截器实现，用于结合jaeger来实现rpc调用链跟踪。
 
 # Dependencies
