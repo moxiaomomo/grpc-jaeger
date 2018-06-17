@@ -14,7 +14,7 @@ func (s *server) SayHello(ctx context.Context, in *HelloRequest) (*HelloResponse
 	return &HelloResponse{Message: "Hi " + in.Name + "\n"}, nil
 }
 
-// RegisterGreeterServer register into grpc
+// RegisterGreeterSrv register service into grpc
 func RegisterGreeterSrv(gsvr *grpc.Server) {
 	RegisterGreeterServer(gsvr, &server{})
 }
